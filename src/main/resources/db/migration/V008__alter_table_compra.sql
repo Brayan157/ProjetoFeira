@@ -1,0 +1,1 @@
+ALTER TABLE tb_compra ALTER COLUMN numero_comprador TYPE VARCHAR(50);
