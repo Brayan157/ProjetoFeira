@@ -71,8 +71,9 @@ class PessoaServiceImpl (
         return pessoaRepository.findAll()
     }
 
-    override fun editar(id: Long, pessoaUpdateRequest: PessoaUpdateRequest): PessoaModel {
-        val pessoa = pessoaRepository.findById(id)
+    override fun editar(email: String, pessoaUpdateRequest: PessoaUpdateRequest): PessoaModel {
+        val login = loginRepository.findByEmail(email)
+        val pessoa = pessoaRepository.findById(login.funcionario.id!!)
         val pessoaSave = pessoa.copy(
             nome = pessoaUpdateRequest.nome ?: pessoa.nome,
             dataNascimento = pessoaUpdateRequest.dataNascimento ?: pessoa.dataNascimento,

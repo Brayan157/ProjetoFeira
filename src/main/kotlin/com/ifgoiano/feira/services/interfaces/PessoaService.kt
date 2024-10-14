@@ -12,7 +12,7 @@ interface PessoaService {
     fun save(pessoaRequest: PessoaRequest):PessoaModel
     fun findById(id: Long): PessoaModel
     fun findAll(): List<PessoaModel>
-    fun editar(id: Long, pessoaUpdateRequest: PessoaUpdateRequest): PessoaModel
+    fun editar(email:String, pessoaUpdateRequest: PessoaUpdateRequest): PessoaModel
     fun mudarSenha(email:String, novaSenha: NovaSenhaRequest): ResponseEntity<Any>
     fun loadUserByUsername(emailUsuario: String): UserDetails
 }
