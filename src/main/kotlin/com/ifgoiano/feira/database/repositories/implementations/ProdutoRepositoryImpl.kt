@@ -3,6 +3,7 @@ package com.ifgoiano.feira.database.repositories.implementations
 import com.ifgoiano.feira.database.entities.Produto
 import com.ifgoiano.feira.database.repositories.interfaces.ProdutoRepository
 import com.ifgoiano.feira.database.repositories.stringData.ProdutoSpringDataRepository
+import com.ifgoiano.feira.enum.CategoriaProduto
 import com.ifgoiano.feira.models.ProdutoModel
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import org.springframework.data.domain.Page
@@ -47,6 +48,10 @@ class ProdutoRepositoryImpl(
 
     override fun findAllById(produtoIds: List<Long>): List<Produto> {
         return produtoJpaRepository.findAllById(produtoIds)
+    }
+
+    override fun findByCategoria(categoria: CategoriaProduto,  pageable: Pageable): Page<ProdutoModel> {
+        return produtoJpaRepository.findByCategoria(categoria,  pageable).map { it.toProdutoModel() }
     }
 
 }

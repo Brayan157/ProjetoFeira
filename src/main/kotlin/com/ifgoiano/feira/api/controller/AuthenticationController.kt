@@ -30,8 +30,12 @@ class AuthenticationController(
         return try {
             val loginPassword = UsernamePasswordAuthenticationToken(login.email, login.senha)
             val auth = this.authenticationManager.authenticate(loginPassword)
-            val token = tokenService.generateToken((auth.principal) as LoginModel)
-            ResponseEntity.ok(token)
+            if (pessoaService.loginStatusActive(login.email)) {
+                val token = tokenService.generateToken((auth.principal) as LoginModel)
+                ResponseEntity.ok(token)
+            }else {
+                ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login está desativado")
+            }
         } catch (ex: Exception){
             ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("E-mail ou senha incorreto")
         }
@@ -46,5 +50,6 @@ class AuthenticationController(
 
         return ResponseEntity.ok("Senha atualizada com sucesso")
     }
+
 
 }

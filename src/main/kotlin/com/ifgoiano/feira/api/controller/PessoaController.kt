@@ -8,6 +8,7 @@ import com.ifgoiano.feira.config.security.TokenService
 import com.ifgoiano.feira.models.PessoaModel
 import com.ifgoiano.feira.services.interfaces.PessoaService
 import jakarta.servlet.http.HttpServletRequest
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -39,7 +40,11 @@ data class PessoaController(
         val email = tokenService.validateToken(token)
        return pessoaService.editar(email, pessoaUpdateRequest)
     }
+    @PutMapping("/desativar/{id}")
+    fun desativar(@PathVariable id: Long):PessoaModel = pessoaService.desativarLogin(id)
 
+    @PutMapping("/tornarAdmin/{id}")
+    fun tornarAdimin(@PathVariable id: Long):PessoaModel = pessoaService.tornarAdmin(id)
 
 }
 

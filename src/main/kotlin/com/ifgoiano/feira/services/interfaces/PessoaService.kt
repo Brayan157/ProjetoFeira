@@ -15,4 +15,7 @@ interface PessoaService {
     fun editar(email:String, pessoaUpdateRequest: PessoaUpdateRequest): PessoaModel
     fun mudarSenha(email:String, novaSenha: NovaSenhaRequest): ResponseEntity<Any>
     fun loadUserByUsername(emailUsuario: String): UserDetails
+    fun loginStatusActive(email: String):Boolean
+    fun desativarLogin(id: Long): PessoaModel
+    fun tornarAdmin(id: Long): PessoaModel
 }

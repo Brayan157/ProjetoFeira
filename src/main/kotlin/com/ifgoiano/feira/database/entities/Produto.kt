@@ -1,5 +1,6 @@
 package com.ifgoiano.feira.database.entities
 
+import com.ifgoiano.feira.enum.CategoriaProduto
 import com.ifgoiano.feira.enum.StatusProduto
 import com.ifgoiano.feira.enum.TipoVendaProduto
 import com.ifgoiano.feira.models.ProdutoModel
@@ -30,6 +31,9 @@ data class Produto(
     @Column(name = "tipo_venda_produto", nullable = false)
     val tipoProduto:TipoVendaProduto,
     @Enumerated(EnumType.STRING)
+    @Column(name = "categoria", nullable = false)
+    val categoria: CategoriaProduto,
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     val status: StatusProduto,
     @Column(name = "creation_date")
@@ -46,7 +50,8 @@ data class Produto(
         tipoProduto = tipoProduto,
         status = status,
         creationDate = creationDate,
-        updateData = updateData
+        updateData = updateData,
+        categoriaProduto = categoria
     )
 
     companion object {
@@ -56,6 +61,7 @@ data class Produto(
             precoUnitario = produtoModel.precoUnitario,
             tipoProduto = produtoModel.tipoProduto,
             status = produtoModel.status,
+            categoria = produtoModel.categoriaProduto,
             creationDate = produtoModel.creationDate,
             updateData = produtoModel.updateData
         )

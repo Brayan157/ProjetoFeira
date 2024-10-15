@@ -37,7 +37,7 @@ class PessoaServiceImpl (
                 .replace("-", "")
                 .replace(".",""),
             dataNascimento = pessoaRequest.dataNascimento,
-            funcao = Funcao.ADMINISTRADOR,
+            funcao = Funcao.CADASTRANTE,
             telefones = pessoaRequest.telefones
         )
         val pessoa = pessoaRepository.save(pessoaModel)
@@ -65,6 +65,18 @@ class PessoaServiceImpl (
 
     override fun loadUserByUsername(username: String): UserDetails {
         return loginRepository.findByEmail(username)
+    }
+
+    override fun loginStatusActive(email: String): Boolean {
+        return loginRepository.existsByEmailAndStatus(email, StatusLogin.ATIVO)
+    }
+
+    override fun desativarLogin(id: Long): PessoaModel {
+        val pessoa = findById(id)
+        val login = loginRepository.findByFuncionario(pessoa)
+        val loginSave = login.copy(status = StatusLogin.INATIVO)
+        loginRepository.save(loginSave)
+        return findById(id)
     }
 
     override fun findAll(): List<PessoaModel> {
@@ -100,6 +112,12 @@ class PessoaServiceImpl (
         } catch(ex: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao atualizar a senha")
         }
+    }
+
+    override fun tornarAdmin(id: Long): PessoaModel {
+        val pessoa = findById(id)
+        val pessoaSave = pessoa.copy(funcao = Funcao.ADMINISTRADOR)
+        return pessoaRepository.save(pessoaSave)
     }
 
 }

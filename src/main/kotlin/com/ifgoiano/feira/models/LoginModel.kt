@@ -17,7 +17,6 @@ data class LoginModel(
     val funcionario: PessoaModel
 ) : UserDetails {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        println("ROLE_${funcionario.funcao.name}")
         return mutableListOf(SimpleGrantedAuthority("ROLE_${funcionario.funcao.name}"))
     }
 

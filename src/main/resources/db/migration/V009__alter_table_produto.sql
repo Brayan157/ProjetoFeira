@@ -1,0 +1,1 @@
+ALTER TABLE tb_produto ADD COLUMN categoria VARCHAR(150);

@@ -3,6 +3,7 @@ package com.ifgoiano.feira.services.implementations
 import com.ifgoiano.feira.api.request.ProdutoRequest
 import com.ifgoiano.feira.api.request.ProdutoUpdateRequest
 import com.ifgoiano.feira.database.repositories.interfaces.ProdutoRepository
+import com.ifgoiano.feira.enum.CategoriaProduto
 import com.ifgoiano.feira.enum.StatusProduto
 import com.ifgoiano.feira.enum.TipoVendaProduto
 import com.ifgoiano.feira.models.ProdutoModel
@@ -11,6 +12,8 @@ import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
+import kotlin.IllegalArgumentException
+
 @Service
 class ProdutoServiceImpl(
     val produtoRepository: ProdutoRepository
@@ -42,12 +45,18 @@ class ProdutoServiceImpl(
             precoUnitario = produtoRequest.precoUnitario ?: produtoModel.precoUnitario,
             tipoProduto = produtoRequest.tipoProduto?.let { TipoVendaProduto.valueOf(it) } ?: produtoModel.tipoProduto,
             status = produtoRequest.status?.let { StatusProduto.valueOf(it) } ?: produtoModel.status,
+            categoriaProduto = produtoRequest.categoriaProduto?.let { CategoriaProduto.valueOf(it.toString()) } ?: produtoModel.categoriaProduto
         )
         return produtoRepository.save(produtoToSave)
     }
 
     override fun existsByNomeProduto(nomeProduto: String): Boolean {
         return produtoRepository.existsByNomeProduto(nomeProduto)
+    }
+
+    override fun findByCategoria(categoria: CategoriaProduto,  pageable: Pageable): Page<ProdutoModel> {
+
+        return produtoRepository.findByCategoria(categoria,  pageable)
     }
 
 }

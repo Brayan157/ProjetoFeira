@@ -2,6 +2,7 @@ package com.ifgoiano.feira.api.controller
 
 import com.ifgoiano.feira.api.request.ProdutoRequest
 import com.ifgoiano.feira.api.request.ProdutoUpdateRequest
+import com.ifgoiano.feira.enum.CategoriaProduto
 import com.ifgoiano.feira.services.interfaces.ProdutoService
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
@@ -40,4 +41,10 @@ class ProdutoController(
 
     @GetMapping("existe/nome/{nome}")
     fun existsByNomeProduto(@PathVariable nomeProduto: String) = produtoService.existsByNomeProduto(nomeProduto)
+
+    @GetMapping("/categoria/{categoria}")
+    fun listarPorCategoria(
+        @PathVariable categoria:CategoriaProduto,
+        @PageableDefault(page = 0, size = 10) pageable: Pageable
+    ) = produtoService.findByCategoria(categoria, pageable)
 }

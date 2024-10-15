@@ -4,6 +4,7 @@ import com.ifgoiano.feira.database.entities.Login
 import com.ifgoiano.feira.database.entities.Pessoa
 import com.ifgoiano.feira.database.repositories.interfaces.LoginRepository
 import com.ifgoiano.feira.database.repositories.stringData.LoginSpringDataRepository
+import com.ifgoiano.feira.enum.StatusLogin
 import com.ifgoiano.feira.models.LoginModel
 import com.ifgoiano.feira.models.PessoaModel
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
@@ -29,5 +30,9 @@ class LoginRepositoryImpl(
     override fun findByFuncionario(pessoa: PessoaModel): LoginModel {
         val pessoaEntity = Pessoa.of(pessoa)
         return loginJpaRepository.findByFuncionario(pessoaEntity).toLoginModel()
+    }
+
+    override fun existsByEmailAndStatus(email: String, ativo: StatusLogin): Boolean {
+        return loginJpaRepository.existsByEmailAndStatus(email, ativo)
     }
 }
