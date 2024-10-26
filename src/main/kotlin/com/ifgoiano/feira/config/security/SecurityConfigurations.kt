@@ -15,6 +15,7 @@ import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.csrf.CsrfFilter
 
+@Suppress("DEPRECATION", "removal")
 @Configuration
 @EnableWebSecurity
 class SecurityConfigurations(

@@ -19,8 +19,15 @@ repositories {
 	mavenCentral()
 	maven(url = "https://jitpack.io")
 }
+
 val postgreeSQLVersion = "42.6.0"
 val flywayVersion = "9.2.2"
+val testContainersVersion = "3.2.2"
+val testContainersJunitVersion = "1.19.1"
+val postgresSqlTestContainersVersion = "1.19.1"
+val mockkVersion = "1.13.3"
+val springMockkVersion = "4.0.0"
+
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
@@ -35,6 +42,11 @@ dependencies {
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testImplementation("org.springframework.security:spring-security-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	testImplementation("org.testcontainers:postgresql:$postgresSqlTestContainersVersion")
+	testImplementation("org.springframework.boot:spring-boot-testcontainers:$testContainersVersion")
+	testImplementation("org.testcontainers:junit-jupiter:$testContainersJunitVersion")
+	testImplementation("io.mockk:mockk:$mockkVersion")
+	testImplementation("com.ninja-squad:springmockk:$springMockkVersion")
 }
 
 kotlin {

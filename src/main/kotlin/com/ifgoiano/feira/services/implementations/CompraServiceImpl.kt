@@ -135,7 +135,7 @@ class CompraServiceImpl(
             val item = ItensModel(
                 produtoId = produtoModel.id!!,
                 quantidade = itemRequest.quantidade,
-                compraId = compra.id!!
+                compraId = compra.id
             )
             itens.add(item)
         }
